@@ -1,6 +1,7 @@
 import pandas
 from sklearn.model_selection import cross_val_score
-
+from numpy import random as npr
+npr.seed(100)
 
 class BankerBase(object):
 
@@ -21,7 +22,7 @@ def get_data():
             'property', 'age', 'other installments', 'housing', 'credits',
             'job', 'persons', 'phone', 'foreign']
     target = 'repaid'
-    df = pandas.read_csv('data/german.data', sep=' ', names=features+[target])
+    df = pandas.read_csv('../data/german.data', sep=' ', names=features+[target])
     numeric_colums = df.columns[df.dtypes == 'int64']
     categorical_columns = df.columns[df.dtypes == 'object']
     dummies = pandas.get_dummies(df[categorical_columns], drop_first=True)
@@ -57,7 +58,8 @@ def get_average_utility(banker,  interest_rate, n_folds=50):
     return utils.mean(), utils.std()
 
 
-def run(interest_rate=0.05):
+def run(interest_rate=0.5/100*12):
+# def run(interest_rate=0.0005):
     for cls in BankerBase.__subclasses__():
         print(cls.__name__, get_average_utility(
             cls(interest_rate=interest_rate),

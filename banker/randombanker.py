@@ -1,6 +1,7 @@
 from banker import BankerBase, run
-from random import choice
-
+# from random import choice
+from numpy import random as npr
+npr.seed(100)
 
 class RandomBanker(BankerBase):
     """Example Banker implementation. To implement your own, you need to take
@@ -20,7 +21,8 @@ class RandomBanker(BankerBase):
         pass
 
     def get_best_action(self, X):
-        return choice((1, 2))
+        # return choice((1, 2))
+        return npr.choice([0,1])
 
 
 if __name__ == '__main__':
